@@ -1,13 +1,13 @@
 # Undumper utility for EUR-Lex Data Dumps
 
-A small Python command‑line tool that **copies** EUR-Lex data dump
-files (HTML, PDF, DOCX, …) from a UUID‑based archive into a clean output
-folder hierarchy, using metadata fetched from each file’s corresponding
-metadata archive (to be downloaded separately).
+A small Python command‑line tool that **copies** [EUR-Lex data dump](https://datadump.publications.europa.eu/)
+files (HTML, PDF, DOCX, …) from a UUID‑based archive using technical identifiers
+into a clean and customizable output folder hierarchy, using metadata fetched
+from each file’s corresponding metadata (to be downloaded separately).
 
 > **Why?** EU Cellar dumps are great, but the folder layout (one UUID
 > folder per document with terse filenames) is a bit uncomfortable 
-> browsing. This script lets you reorganise the dump by year, month,
+> for browsing. This script lets you reorganise the dump by year, month,
 > ELI, title — whatever you like — while keeping the original files
 > intact.
 
@@ -39,6 +39,11 @@ Both directories must share the *same* set of UUID folders, should work for ever
 ---
 
 ## Quick‑start
+
+### 0. Preparation
+ - Download the archives you are interested in on https://datadump.publications.europa.eu/.
+ - Download the metadata archive also
+ - Extract both archives in separate folder
 
 ### 1. Clone & set up a virtualenv
 

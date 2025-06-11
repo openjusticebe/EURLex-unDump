@@ -1,0 +1,4 @@
+click==8.2.1 ; python_version >= "3.11" and python_version < "4.0"
+colorama==0.4.6 ; python_version >= "3.11" and python_version < "4.0" and platform_system == "Windows"
+pyparsing==3.2.3 ; python_version >= "3.11" and python_version < "4.0"
+rdflib==7.1.4 ; python_version >= "3.11" and python_version < "4.0"

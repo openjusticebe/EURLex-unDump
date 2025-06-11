@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-cli.py
+undump.py
 ~~~~~~
-Command‑line utility that reorganises an *archive/dump* of files into a
-clean *collection/output* directory, driven by **RDF metadata**.
+Command‑line utility that reorganises a **EUR-Lex data dump** into a
+clean *collection* directory, driven by **RDF metadata**.
 
 Directory assumptions
 =====================
 * **Archive**: ``ARCHIVE_DIR/<UUID>/<FILETYPE>/<original_filename>.<ext>``
-  – there may be multiple file types (``html``, ``pdf``, ``docx`` …). The
-  script treats them transparently: the original extension is preserved.
+  – Different dump types (``html``, ``pdf``, ``fmx`` …) should be supported.
+    The script treats them transparently: the original extension is preserved.
 * **Metadata**: ``METADATA_DIR/<UUID>/tree_non_inferred.rdf``.  The RDF
   filename is configurable with the global ``RDF_FNAME`` constant.
 
@@ -87,7 +87,11 @@ def parse_metadata(rdf_path: Path, language: str) -> Dict[str, str]:
     """Return a dict of values extracted from *rdf_path* using SPARQL.
 
     The UUID is inferred from the parent directory name, then injected
-    into the `ROOT_URI` required by the Cellar data model.
+    into the `ROOT_URI` required by Cellar's Common Data Model (CDM).
+    
+    For more information on CDM or testing SPARQL queries:
+        - https://op.europa.eu/en/web/eu-vocabularies/cdm
+        = https://publications.europa.eu/webapi/rdf/sparql
     """
     uuid = rdf_path.parent.name
     root_uri = f"http://publications.europa.eu/resource/cellar/{uuid}"
@@ -176,7 +180,6 @@ def build_destination(
     file_mask: str,
     src_path: Path,
 ) -> Path:
-    # ---- sub‑folder path (slugify each part) ------
     raw_sub = render_mask(folder_mask, metadata).strip("/\\")
     if raw_sub:
         dest_dir = output_root
@@ -186,7 +189,6 @@ def build_destination(
     else:
         dest_dir = output_root
 
-    # ---- file stem (slugified) ------
     raw_stem = render_mask(file_mask, metadata).strip() or metadata.get("default_identifier") or src_path.stem
     #file_stem = slugify(raw_stem)
     file_stem = raw_stem
